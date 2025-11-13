@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat FAQ</title>
+
+</head>
+
+
+<body>
+
+    <div id="nav-placeholder"></div>
+    <script>
+        fetch('assets/topnav.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('nav-placeholder').innerHTML = data;
+        });
+    </script>
+
+<div class="page">
+<!-- <a href="javascript:history.back()" class="back-button">← Back</a> -->
+
+    <h1>FAQ</h1>
+
+    <!--Question with bullets block-->
+    <div class="">
+    <h2>Q: What if this happens?</h2>
+    <p>A: Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illum placeat, neque nam adipisci quos, corporis quas doloribus quasi reprehenderit mollitia possimus in fugiat dignissimos, perspiciatis saepe. Ad fugiat numquam mollitia.</p>
+    <h3>For Instance</h3>
+    <ul>
+        <li>Example 1</li>
+        <li>Example 2</li>
+        <li>Example 3</li>
+    </ul>
+    </div>
+    <!--Question with image block-->
+    <div class="">
+    <h2>Q: What if that happens?</h2>
+    <p>A: Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illum placeat, neque nam adipisci quos, corporis quas doloribus quasi reprehenderit mollitia possimus in fugiat dignissimos, perspiciatis saepe. Ad fugiat numquam mollitia.</p>
+    <h3>Picture Demonstration</h3>
+    <div class="">
+        <img alt="" src="https://media.gettyimages.com/id/2177435167/vector/striped-caution-barricade-tape-seamless-pixel-perfect-pattern.webp?s=612x612&w=gi&k=20&c=EtO2KRicgE9_UrO_39aFsJnNkWyrge3U3CUXEVYGs6U=">
+    </div>
+    </div>
+    <!--Question with links block-->
+    <div class="">
+    <h2>Q: When does this happen?</h2>
+    <p>A: Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illum placeat, neque nam adipisci quos, corporis quas doloribus quasi reprehenderit mollitia possimus in fugiat dignissimos, perspiciatis saepe. Ad fugiat numquam mollitia.</p>
+    <h3>Contact Info:</h3>
+    <ul>
+        <li><a href="">johndoe@gmail.com</a></li>
+        <li><a href="">123-456-7890</a></li>
+        <li>123 Generic Street, Chicago, IL, 60041</li>
+    </ul>
+    </div>
+</div>
+
+
+</body>
+
+
+</html>
