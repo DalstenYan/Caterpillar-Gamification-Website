@@ -2,11 +2,13 @@
 import mysql from "mysql2";
 import dotenv from "dotenv";
 
+
 dotenv.config();
 const app = express();
-const PORT = 3306;
+const PORT = 3300;
 
-app.use(express.static("public"));
+app.use(express.static('Public')); 
+app.use(express.json());
 
 // Database connection
 const db = mysql.createConnection({
@@ -28,14 +30,14 @@ db.connect(err => {
 
 // POST 
 app.post('/login', (req, res) => {
-    const { CWS, password } = req.body;
+    const { CWS_ID, password } = req.body;
 
-    if (!CWS || !password) {
+    if (!CWS_ID || !password) {
         return res.status(400).json({ success: false, message: 'Missing credentials' });
     }
     //Login 
     const sql = 'SELECT * FROM employee WHERE CWS_ID = ? AND Password = ?';
-    db.query(sql, [CWS, password], (err, results) => {
+    db.query(sql, [CWS_ID, password], (err, results) => {
         if (err) {
             console.error('Error during query:', err);
             return res.status(500).json({ success: false, message: 'Database error' });
