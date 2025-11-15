@@ -51,6 +51,47 @@ app.post('/login', (req, res) => {
     });
 });
 
+// Get current points
+app.get('/point', (req, res) => {
+    const sql = 'SELECT Points_Earned FROM activitylog WHERE LogID = 1';
+    db.query(sql, (err, results) => {
+        if (err) {
+            console.error("Error fetching score:", err);
+            return res.status(500).json({ success: false, message: "Database error" });
+        }
+
+        res.json({ success: true, total: results[0].total });
+    });
+});
+
+// Add points (1, 5, or 10)
+app.post('/add', (req, res) => {
+    const { amount } = req.body; // e.g., { amount: 5 }
+
+    if (![1, 5, 10].includes(amount)) {
+        return res.status(400).json({ success: false, message: "Invalid amount" });
+    }
+
+    const sql = 'UPDATE activitylog SET Points_Earned = total + ? WHERE LogID = 1';
+
+    db.query(sql, [amount], (err) => {
+        if (err) {
+            console.error("Error updating score:", err);
+            return res.status(500).json({ success: false, message: "Database error" });
+        }
+
+        // send back updated total
+        db.query('SELECT Points_Earned FROM activitylog WHERE LogID = 1', (err, results) => {
+            if (err) {
+                console.error("Error fetching updated score:", err);
+                return res.status(500).json({ success: false, message: "Database error" });
+            }
+
+            res.json({ success: true, total: results[0].total });
+        });
+    });
+});
+
 // Start server
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);

@@ -32,6 +32,35 @@
       <li><a href="daily-inspection.html">Daily Inspections</a></li>
     </ul>
 
+    <p>Points: <span id="points">0</span></p>
+
+<button onclick="add(1)">+1</button>
+<button onclick="add(5)">+5</button>
+<button onclick="add(10)">+10</button>
+
+<script>
+async function loadScore() {
+    const res = await fetch("/point");
+    const data = await res.json();
+    document.getElementById("points").textContent = data.total;
+}
+
+async function add(amount) {
+    const res = await fetch("/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+        document.getElementById("points").textContent = data.total;
+    }
+}
+
+loadScore();
+</script>
 </div>
 
 
