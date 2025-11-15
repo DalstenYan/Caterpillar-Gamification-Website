@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Settings</title>
+    <script>
+
+        
+
+        document.addEventListener("DOMContentLoaded", function() {
+            LoadSliders()
+            LoadCheckboxes()
+            //need LoadDropdown
+        })
+
+        function LoadSliders() 
+        {
+            var sliders = document.querySelectorAll('.slider');
+            var sliderValues = JSON.parse(localStorage.sliders)
+
+            i = 0
+            sliders.forEach(slider => {
+                let sliderSpanId = slider.id + "_value"
+                let sliderDisplay = document.getElementById(sliderSpanId)
+
+                slider.value = sliderValues[sliders[i].name]
+                sliderDisplay.textContent = slider.value
+                
+
+                slider.addEventListener('change', () => {
+                    sliderDisplay.textContent = slider.value
+                })
+                i++
+            })
+        }
+
+        function LoadCheckboxes() 
+        {
+            var checkboxes = document.querySelectorAll('.checkbox');
+            var checkboxValues = JSON.parse(localStorage.checkboxes)
+            for(i = 0; i < checkboxes.length; i++) 
+            {
+                checkboxes[i].checked = checkboxValues[checkboxes[i].name]
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div id="nav-placeholder"></div>
+    <script>
+        fetch('assets/topnav.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('nav-placeholder').innerHTML = data;
+        });
+    </script>
+
+<div class="page">
+<!-- <a href="javascript:history.back()" class="back-button">← Back</a> -->
+
+    <h1>Settings</h1>
+    <h3>Language</h3>
+    <form>
+        <input type="radio" id="eng_lang_radio" name="pref_language" value="English">
+        <label for="eng_lang_radio">English</label>
+        <input type="radio" id="esp_lang_radio" name="pref_language" value="Espanol">
+        <label for="esp_lang_radio">Espanol</label>
+    </form>
+
+    <h3>Checkboxes</h3>
+     <form>
+        <input type="checkbox" id="pref_box_1" name="Preference1" class="checkbox">
+        <label for="pref_box_1"> Preference 1</label><br>
+        <input type="checkbox" id="pref_box_2" name="Preference2" class="checkbox">
+        <label for="pref_box_2"> Preference 2</label><br>
+        <input type="checkbox" id="pref_box_3" name="Preference3" class="checkbox">
+        <label for="pref_box_3"> Preference 3</label>
+    </form> 
+
+    <h3>Slider</h3>
+    <div class="slidecontainer">
+        <span>Slider One</span><input type="range" name="sliderone" min="0" max="100" value="50" class="slider" id="slider_1"><span id="slider_1_value">50</span><br>
+        <span>Slider Two</span><input type="range" name="slidertwo" min="0" max="100" value="50" class="slider" id="slider_2"><span id="slider_2_value">50</span>
+    </div>
+
+    <h3>Dropdown</h3>
+    <select name="Dropdown" id="Dropdown">
+    <option value="" disabled>Choose An Option</option>
+    <option value="opt1">Option 1</option>
+    <option value="opt2">Option 2</option>
+    <option value="opt3">Option 3</option>
+    <option value="opt4">Option 4</option>
+    </select><br><br>
+    <button type="button" onclick="SaveAllSettings()">Save All</button><span id="result"></span>
+    <script>
+        function SaveAllSettings() 
+        {
+            SavePreferredLanguage()
+            SaveCheckboxes()
+            SaveSliders()
+            SaveDropdown()
+            RecordTime()
+        }
+        
+        function SavePreferredLanguage()
+        {
+            var radios = document.getElementsByName('pref_language');
+
+            for (i = 0; i < radios.length; i++) {
+                if (radios[i].checked)
+                    localStorage.userLang = radios[i].value
+            }
+        }
+        function SaveCheckboxes() 
+        {
+            var checkboxes = document.querySelectorAll('.checkbox');
+
+            const checkboxObj = new Object()
+            
+            for (i = 0; i < checkboxes.length; i++) {
+                
+                checkboxObj[checkboxes[i].name] = checkboxes[i].checked
+            }
+            localStorage.checkboxes = JSON.stringify(checkboxObj)
+        }
+        function SaveSliders() 
+        {
+            var sliders = document.querySelectorAll('.slider');
+
+            const slidersObj = new Object()
+
+            for(i = 0; i < sliders.length; i++) 
+            {
+                slidersObj[sliders[i].name] = sliders[i].value
+            }
+
+            localStorage.sliders = JSON.stringify(slidersObj)
+        }
+
+        function SaveDropdown() 
+        {
+            var dropdown = document.getElementById('Dropdown')
+
+            localStorage.dropdown = dropdown.value
+        }
+
+        function RecordTime() 
+        {
+            timeSpan = document.getElementById('result')
+            timeSpan.innerText = "Changes Saved at " + new Date().toLocaleTimeString()
+        }
+
+    </script>
+</div>
+
+
+</body>
+
+
+</html>
