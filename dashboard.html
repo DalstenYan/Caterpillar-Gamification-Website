@@ -9,7 +9,7 @@
 
 </head>
 
-<body>
+<body onload="displaySpinWheelOnOpen()">
 
   <div id="nav-placeholder"></div>
   <script>
@@ -22,6 +22,28 @@
 
 <div class="page">
   <h1>Dashboard</h1>
+
+  <!-- Start of Wheel & Popup Code -->
+    <div class="popup" id="popup">
+        <img src="./assets/chance_button.png">
+        <h2>Spin to win!</h2>
+        <div class="wheel-container">
+            <div class="spinBtn">Spin</div>
+            <div class="wheel">
+                <div class="number" style="--i:1; --clr:#db7093;"><span>100</span></div>
+                <div class="number" style="--i:2; --clr:#8270db;"><span>80</span></div>
+                <div class="number" style="--i:3; --clr:#7edb70;"><span>30</span></div>
+                <div class="number" style="--i:4; --clr:#db8970;"><span>50</span></div>
+                <div class="number" style="--i:5; --clr:#b670db;"><span>90</span></div>
+                <div class="number" style="--i:6; --clr:#db7070;"><span>120</span></div>
+                <div class="number" style="--i:7; --clr:#70dbc6;"><span>20</span></div>
+                <div class="number" style="--i:8; --clr:#dbdb70;"><span>90</span></div>
+            </div>
+        </div>
+        <p>Click SPIN to claim your daily login.</p>
+        <button type="button" onclick="closePopup()">OK</button>
+    </div>
+    <!-- End of Wheel & Popup Code -->
 
   <div class="cardgrid">
 
@@ -45,14 +67,7 @@
       </div>
       <div class="dashboard-card-title">Report Logs</div>
     </a>
-
-    <a href="admin-panel.html" class="dashboard-card">
-      <div class="dashboard-card-icon">
-        <span class="material-icons">admin_panel_settings</span>
-      </div>
-      <div class="dashboard-card-title">Admin Panel</div>
-    </a>
-
+    
   </div>
 
 <h3>Today you still haven't.....</h3>
@@ -61,9 +76,29 @@
       <li><a href="daily-trivia.html">Daily Trivia</a></li>
       <li><a href="daily-inspection.html">Daily Inspection</a></li>
   </ul>
-      
-
 
       </div>
+    <!-- Scripts -->
+     <script>
+    let popup = document.getElementById("popup");
+    let wheel = document.querySelector('.wheel');
+    let spinBtn = document.querySelector('.spinBtn');
+    let value = Math.ceil(Math.random() * 3600);
+    let hasBeenClicked = false;
+
+        function displaySpinWheelOnOpen(){
+            popup.classList.add("open-popup")
+        }
+        function closePopup(){
+            popup.classList.remove("open-popup")
+        }
+        spinBtn.onclick = function(){
+            if(!hasBeenClicked){
+                hasBeenClicked = true;
+                wheel.style.transform = "rotate(" + value + "deg)";
+                value += Math.ceil((Math.random() * 3600));
+            }
+        }
+    </script>
 </body>
 </html>
