@@ -121,7 +121,7 @@
 
         if (response.ok && result.success) {
           alert("Login successful!");
-          // TODO: redirect after successful login
+          window.location.href = 'dashboard.html';
         } else {
           errorDiv.textContent = result.message || "Invalid CWS or password.";
         }
