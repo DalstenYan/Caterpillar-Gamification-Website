@@ -5,8 +5,64 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cat {XYZ}</title>
+    <title>Employee Database</title>
+    <style>
+        .inactive-tab 
+        {
+            display: none;
+        }
 
+        .tabs-container, .grid-view 
+        {
+            background-color: rgb(128, 128, 128);
+            display: flex;
+            flex-direction: row;
+        }
+
+        .grid-view 
+        {
+            flex-wrap: wrap;
+        }
+
+        .tabs-container
+        {
+            width: 100%;
+        }
+
+        .btntab, .employee-pic, .employee-info
+        {
+            flex-grow: 1;
+        }
+
+        .employee-card 
+        {
+            background-color:cornflowerblue;
+            flex-grow: 1;
+            margin: 5px;
+            display: flex;
+        }
+
+        .employee-pic 
+        {
+            object-fit:scale-down;
+            margin: 10px;
+            margin-right: 0px;
+            border-radius: 100%;
+        }
+        .employee-info 
+        {
+            color: white;
+            text-align: center;
+            align-content: center;
+            padding: 5px;
+        }
+
+        .employee-card, .employee-pic, .employee-info 
+        {
+            max-width: calc(50% - 10px);
+        }
+        
+    </style>
 </head>
 
 
@@ -25,7 +81,47 @@
 <!-- <a href="javascript:history.back()" class="back-button">← Back</a> -->
 
     <h1>Employee Database</h1>
-    <p>WIP</p>
+    <div class="database-view">
+
+        <!--Tabs for changing modes-->
+        <div class="tabs-container">
+            <button type="button" class="btntab" >Grid View</button>
+            <button type="button" class="btntab">List View</button>
+        </div>
+
+        <!--Card-focused grid view-->
+        <div class="grid-view">
+            <div class="employee-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg" class="employee-pic" alt="John">
+                <div class="employee-info">
+                    <h2>John Doe</h2>
+                    <p>Employee Position</p>
+                    <p>Employee Department</p>
+                    <p>Clocked In Status</p>
+                </div>
+            </div>
+
+            <div class="employee-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg" class="employee-pic" alt="John">
+                <div class="employee-info">
+                    <h2>Jane Doe</h2>
+                    <p>Employee Position</p>
+                    <p>Employee Department</p>
+                    <p>Clocked In Status</p>
+                </div>
+            </div>
+
+            <div class="employee-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg" class="employee-pic" alt="John">
+                <div class="employee-info">
+                    <h2>Alex Smith</h2>
+                    <p>Employee Position</p>
+                    <p>Employee Department</p>
+                    <p>Clocked In Status</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 
