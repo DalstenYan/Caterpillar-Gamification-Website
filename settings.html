@@ -11,10 +11,22 @@
         
 
         document.addEventListener("DOMContentLoaded", function() {
+            LoadRadioButtons()
             LoadSliders()
             LoadCheckboxes()
-            //need LoadDropdown
+            LoadDropdown()
+            LoadTime()
         })
+
+        function LoadRadioButtons() 
+        {
+            var radios = document.getElementsByName('pref_language');
+
+            for(i = 0; i < radios.length; i++) 
+            {
+                radios[i].checked = radios[i].value === localStorage.userLang
+            }
+        }
 
         function LoadSliders() 
         {
@@ -44,6 +56,19 @@
             for(i = 0; i < checkboxes.length; i++) 
             {
                 checkboxes[i].checked = checkboxValues[checkboxes[i].name]
+            }
+        }
+        function LoadDropdown() 
+        {
+            var dropdown = document.getElementById('Dropdown')
+            dropdown.value = localStorage.dropdown
+        }
+        function LoadTime() 
+        {
+            if(localStorage.lastSettingModification) 
+            {
+                timeSpan = document.getElementById('result')
+                timeSpan.innerText = localStorage.lastSettingModification
             }
         }
     </script>
@@ -79,7 +104,7 @@
         <label for="pref_box_2"> Preference 2</label><br>
         <input type="checkbox" id="pref_box_3" name="Preference3" class="checkbox">
         <label for="pref_box_3"> Preference 3</label>
-    </form> 
+    </form>
 
     <h3>Slider</h3>
     <div class="slidecontainer">
@@ -95,18 +120,18 @@
     <option value="opt3">Option 3</option>
     <option value="opt4">Option 4</option>
     </select><br><br>
-    <button type="button" onclick="SaveAllSettings()">Save All</button><span id="result"></span>
+    <button id="save_button" type="button" onclick="SaveAllSettings()">Save All</button><span id="result"></span>
     <script>
         function SaveAllSettings() 
         {
-            SavePreferredLanguage()
+            SaveRadioButtons()
             SaveCheckboxes()
             SaveSliders()
             SaveDropdown()
             RecordTime()
         }
         
-        function SavePreferredLanguage()
+        function SaveRadioButtons()
         {
             var radios = document.getElementsByName('pref_language');
 
@@ -150,8 +175,10 @@
 
         function RecordTime() 
         {
-            timeSpan = document.getElementById('result')
-            timeSpan.innerText = "Changes Saved at " + new Date().toLocaleTimeString()
+            document.getElementById('save_button').disabled = true
+            localStorage.lastSettingModification = " Settings Last Changed at " + new Date().toLocaleTimeString()
+            window.location.reload()
+            
         }
 
     </script>
