@@ -114,14 +114,14 @@
         const response = await fetch('/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ CWS, password })
+          body: JSON.stringify({ CWS_ID: CWS, password })
         });
 
         const result = await response.json();
 
         if (response.ok && result.success) {
           alert("Login successful!");
-          // TODO: redirect after successful login
+            { window.location.href = "_index.html";}
         } else {
           errorDiv.textContent = result.message || "Invalid CWS or password.";
         }
