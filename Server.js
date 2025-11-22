@@ -1,13 +1,18 @@
 ﻿import express from "express";
 import mysql from "mysql2";
 import dotenv from "dotenv";
-
+import path from "path";
+import { fileURLToPath } from "url";
 
 dotenv.config();
 const app = express();
 const PORT = 3300;
 
-app.use(express.static('Public')); 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Serve the folder
+app.use(express.static(__dirname));
 app.use(express.json());
 
 // Database connection
@@ -28,7 +33,7 @@ db.connect(err => {
     console.log("Connected to server successfully!");
 });
 
-// POST 
+// Login (index.html) 
 app.post('/login', (req, res) => {
     const { CWS_ID, password } = req.body;
 
@@ -51,7 +56,31 @@ app.post('/login', (req, res) => {
     });
 });
 
-// Get current points
+// Leaderboard (Retrieve 10 highest point counts)
+app.get('/leaderboard', (req, res) => {
+    const sql = `
+        SELECT
+            e.CWS_ID,
+            CONCAT(e.Name_First, ' ', e.Name_Last) AS Name,
+            SUM(a.Points_Earned) AS Points
+        FROM employee e
+        LEFT JOIN activitylog a ON e.CWS_ID = a.CWS_ID
+        GROUP BY e.CWS_ID, Name
+        ORDER BY Points DESC
+        LIMIT 10;
+    `;
+
+    db.query(sql, (err, results) => {
+        if (err) {
+            console.error("Error fetching leaderboard:", err);
+            return res.status(500).json({ success: false, message: "Database error" });
+        }
+
+        res.json({ success: true, leaderboard: results });
+    });
+});
+
+// Get current score
 app.get('/point', (req, res) => {
     const sql = 'SELECT Points_Earned FROM activitylog WHERE LogID = 1';
     db.query(sql, (err, results) => {
@@ -81,7 +110,7 @@ app.post('/add', (req, res) => {
         }
 
         // send back updated total
-        db.query('SELECT Points_Earned FROM activitylog WHERE LogID = 1', (err, results) => {
+        db.query('SELECT Points_Earned FROM activitylog WHERE CWS_ID = 1', (err, results) => {
             if (err) {
                 console.error("Error fetching updated score:", err);
                 return res.status(500).json({ success: false, message: "Database error" });

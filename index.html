@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GOC Login</title>
+  <title>Login</title>
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -76,12 +76,12 @@
 </head>
 <body>
   <header>
-    <h1>GOC Login</h1>
+    <h1>Login</h1>
   </header>
   
   <main>
     <div class="login-card">
-      <h2>Prototype Login Page</h2>
+      <h2>Welcome!</h2>
       <form id="loginForm">
         <div>
           <label for="CWS">CWS:</label>
@@ -91,21 +91,17 @@
           <label for="password">Password:</label>
           <input type="password" id="password" name="password" required />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit">Log in</button>
       </form>
       <div id="errorMessage" class="error"></div>
     </div>
   </main>
   
-  <footer>
-    &copy; 2025 Copyright
-  </footer>
-
   <script>
     document.getElementById('loginForm').addEventListener('submit', async function(event) {
       event.preventDefault();
 
-      const CWS = document.getElementById('CWS').value.trim();
+      const CWS_ID = document.getElementById('CWS').value.trim();
       const password = document.getElementById('password').value.trim();
       const errorDiv = document.getElementById('errorMessage');
       errorDiv.textContent = "";
@@ -114,14 +110,13 @@
         const response = await fetch('/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ CWS, password })
+          body: JSON.stringify({ CWS_ID: CWS_ID, password })
         });
 
         const result = await response.json();
 
         if (response.ok && result.success) {
-          alert("Login successful!");
-          window.location.href = 'dashboard.html';
+            { window.location.href = "dashboard.html";}
         } else {
           errorDiv.textContent = result.message || "Invalid CWS or password.";
         }
