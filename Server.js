@@ -51,6 +51,8 @@ app.post('/login', (req, res) => {
     });
 });
 
+//Testing Merge Server.js branch to All-Employees-View for updated database code
+
 // Get current points
 app.get('/point', (req, res) => {
     const sql = 'SELECT Points_Earned FROM activitylog WHERE LogID = 1';
