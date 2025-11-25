@@ -19,12 +19,56 @@
         .then(data => {
             document.getElementById('nav-placeholder').innerHTML = data;
         });
+
+        async function loadLeaderboard() {
+            try {
+                const response = await fetch('/leaderboard');
+                const data = await response.json();
+
+                const tbody = document.getElementById('leaderboardBody');
+                tbody.innerHTML = "";
+
+                if (data.success && data.leaderboard.length > 0) {
+                    data.leaderboard.forEach((emp, index) => {
+                        const row = `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${emp.Name}</td>
+            <td>${emp.Points}</td>
+          </tr>
+        `;
+                        tbody.innerHTML += row;
+                    });
+                } else {
+                    tbody.innerHTML = "<tr><td colspan='3'>No data available</td></tr>";
+                }
+            } catch (err) {
+                console.error("Error loading leaderboard:", err);
+            }
+        }
+
+        // Load the leaderboard on page load
+        loadLeaderboard();
+
+        document.getElementById("homeBtn").addEventListener("click", () => {
+            window.location.href = "_index.html";
+        });
     </script>
 
 <div class="page">
 
-    <h1>Leaderboard</h1>
-    <p>Points: 9,000!!!!!!!!!</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Points</th>
+            </tr>
+        </thead>
+        <tbody id="leaderboardBody">
+            <!-- Populated by POST method in Server.js -->
+        </tbody>
+    </table>
 
     <ul class="navlinks">
       <li><a href="leaderboard-use-points.html">Utilize points</a></li>
