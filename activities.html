@@ -58,9 +58,11 @@
 
     <p class="points-display">Points: <span id="points">0</span></p>
 
-<button onclick="addPoints(1)">+1 point</button>
-<button onclick="addPoints(5)">+5 points</button>
-<button onclick="addPoints(10)">+10 points</button>
+<div class="points-button-container">
+    <button class="points-button" onclick="addPoints(1)">+1 point</button>
+    <button class="points-button" onclick="addPoints(5)">+5 points</button>
+    <button class="points-button" onclick="addPoints(10)">+10 points</button>
+</div>
 
 <script>
   let score = parseInt(localStorage.getItem("score")) || 0;
