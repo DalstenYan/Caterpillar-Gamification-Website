@@ -7,6 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cat {XYZ}</title>
 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+    <link rel="stylesheet" href="assets/global-style.css">
+
 </head>
 
 
@@ -26,19 +30,53 @@
     <h1>Activities</h1>
 
     <ul class="navlinks">
-      <li><a href="activity-stop-to-fix.html">Stop to Fixes</a></li>
-      <li><a href="activity-high-energy-check.html">High Energy Check</a></li>
-      <li><a href="activity-area-work-cleaning.html">Area Work Cleaning</a></li>
-      <li><a href="daily-inspection.html">Daily Inspections</a></li>
+        <li><a href="activity-stop-to-fix.html" class="activity-link">
+            <span class="material-symbols-outlined stop-to-fix-icon">
+                front_hand
+            </span>
+            <span class="activity-label">Stop to Fixes</span></a>
+        </li>  
+        <li><a href="activity-high-energy-check.html" class="activity-link">
+            <span class="material-symbols-outlined high-energy-check-icon">
+                error_med
+            </span>
+            <span class="activity-label">High Energy Check</span></a>
+        </li>
+        <li><a href="activity-area-work-cleaning.html" class="activity-link">
+            <span class="material-symbols-outlined area-work-cleaning-icon">
+                sanitizer
+            </span>
+            <span class="activity-label">Area Work Cleaning</span></a>
+        </li>
+        <li><a href="daily-inspection.html" class="activity-link">
+            <span class="material-symbols-outlined daily-inspections-icon">
+                clinical_notes
+            </span>
+            <span class="activity-label">Daily Inspections</span></a>
+        </li>
     </ul>
 
-    <p>Points: <span id="points">0</span></p>
+    <p class="points-display">Points: <span id="points">0</span></p>
 
-<button onclick="add(1)">+1</button>
-<button onclick="add(5)">+5</button>
-<button onclick="add(10)">+10</button>
+<div class="points-button-container">
+    <button class="points-button" onclick="addPoints(1)">+1 point</button>
+    <button class="points-button" onclick="addPoints(5)">+5 points</button>
+    <button class="points-button" onclick="addPoints(10)">+10 points</button>
+</div>
 
 <script>
+  let score = parseInt(localStorage.getItem("score")) || 0;
+
+  document.getElementById("points").textContent = score;
+
+  function addPoints(amount) {
+    score += amount;
+    localStorage.setItem("score", score);
+    document.getElementById("points").textContent = score;
+  }
+</script>
+
+<!--<script>
 async function loadScore() {
     const res = await fetch("/point");
     const data = await res.json();
@@ -57,10 +95,10 @@ async function add(amount) {
     if (data.success) {
         document.getElementById("points").textContent = data.total;
     }
-}
+} 
 
 loadScore();
-</script>
+</script> -->
 </div>
 
 
